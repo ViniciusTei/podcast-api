@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 
-export default class RssParser {
+export default class CheckUser {
   public async handle ({ request, response }: HttpContextContract, next: () => Promise<void>) {
     const { userId } = request.body()
     const user = await User.findBy('id', userId)

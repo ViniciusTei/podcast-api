@@ -42,5 +42,5 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
-  rss: () => import('App/Middleware/RssParser')
+  rss: () => import('App/Middleware/CheckUser')
 })

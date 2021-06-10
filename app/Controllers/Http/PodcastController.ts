@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Podcast from 'App/Models/Podcast';
-import User from 'App/Models/User';
+
 import Parser from 'rss-parser';
 
 export default class PodcastController {
