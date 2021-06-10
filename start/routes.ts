@@ -22,3 +22,6 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/user', 'UserController.index')
 Route.post('/user', 'UserController.create')
+Route.get('/podcasts', 'PodcastController.index')
+Route.get('/podcasts/:userId', 'PodcastController.show')
+Route.post('/podcasts', 'PodcastController.create').middleware('rss')
