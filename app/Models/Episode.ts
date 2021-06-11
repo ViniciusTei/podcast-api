@@ -6,7 +6,7 @@ export default class Episode extends BaseModel {
   public id: number
 
   @column()
-  public published: DateTime
+  public published: Date
 
   @column()
   public title: string

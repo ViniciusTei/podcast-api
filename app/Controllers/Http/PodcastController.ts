@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Episode from 'App/Models/Episode';
 import Podcast from 'App/Models/Podcast';
 
 import Parser from 'rss-parser';
@@ -7,11 +8,12 @@ export default class PodcastController {
     private parser = new Parser()
 
     public async create({ request, response }: HttpContextContract) {
-        const { url, userId } = request.body()
+        const { url } = request.body()
+        const { userId } = request.cookie('user')
         
         try {
             const podcast = await this.parser.parseURL(url)
-            
+            // console.log(pod.items[0].enclosure?.url)
             const pod = await Podcast.create({
                 author: podcast.itunes?.author,
                 title: podcast.title,
@@ -22,6 +24,17 @@ export default class PodcastController {
                 last_published: podcast.items[0].pubDate,
                 user_id: userId
             })
+
+
+            await Episode.createMany(podcast.items.map(item => {
+                return {
+                    published: new Date(item.pubDate || ''),
+                    title: item.title,
+                    description: item.summary,
+                    link: item.enclosure?.url,
+                    image: item.itunes.image
+                }
+            }))
 
             return pod
         } catch (error) {
