@@ -37,7 +37,8 @@ export default class PodcastController {
                     ep.link = item.enclosure!.url,
                     ep.image = item.itunes.image,
                     ep.podcast_id = podcast.id
-                    await podcast.related('episodes').save(ep)
+                    
+                    await ep.related("podcast").associate(podcast)
             })
 
             return response.status(200).send({
