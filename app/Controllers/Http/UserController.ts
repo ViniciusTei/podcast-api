@@ -8,19 +8,31 @@ export default class UserController {
   }
 
   public async create(ctx: HttpContextContract) {
-      const body = ctx.request.body()   
-      
+      const body = ctx.request.body()
+
       try {
-        const user = await User.create({
+        const userById = await User.findBy('id', body.userId)
+
+        if(userById) {
+          return ctx.response.status(403).send({
+            message: 'Error',
+            data: 'User alredy exists!'
+          })
+        }
+        await User.create({
           id: body.userId,
           email: body.email,
           name: body.name,
           image: body.image
         })
-        return user.$isPersisted
+        return ctx.response.status(200).cookie('user', {userId: body.userId}).send({message: 'Success'})
+        
       } catch (error) {
-        console.log(error)
-        return false
+        
+        return ctx.response.status(500).send({
+          message: 'Error',
+          data: 'Internal error!'
+        })
       }
     
   }
