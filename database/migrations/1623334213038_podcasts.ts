@@ -14,8 +14,7 @@ export default class Podcasts extends BaseSchema {
       table.string('last_published')
       table.string('author')
       table
-        .string('user_id')
-        .unsigned()
+        .integer('user_id')
         .references('users.id')
         .onDelete('CASCADE')
       /**

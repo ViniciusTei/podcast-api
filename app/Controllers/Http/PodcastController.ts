@@ -11,40 +11,39 @@ export default class PodcastController {
     public async create({ request, response }: HttpContextContract) {
         const { url, user_id } = request.body()
 
-
         const podcast = new Podcast();
 
         const user = await User.findOrFail(user_id);
         console.log(user.serialize())
 
-
-
         try {
             const podcastUrl = await this.parser.parseURL(url)
+            
+            podcast.author = podcastUrl.itunes?.author|| ''
+            podcast.title =  podcastUrl.title|| ''
+            podcast.image= podcastUrl.image?.url|| ''
+            podcast.description = podcastUrl.description || ''
+            podcast.feed_rss_url = url
+            podcast.last_published = podcastUrl.items[0].pubDate|| ''
+            podcast.user_id = user.id
 
+            await podcast.related("user").associate(user);
+            
+            podcastUrl.items.forEach(async item => {
+                    const ep = new Episode() 
+                    ep.published = new Date(item.pubDate || ''),
+                    ep.title = item.title! ,
+                    ep.description = item.summary?.toString() || '',
+                    ep.link = item.enclosure!.url,
+                    ep.image = item.itunes.image,
+                    ep.podcast_id = podcast.id
+                    await podcast.related('episodes').save(ep)
+            })
 
-              podcast.author = podcastUrl.itunes?.author|| ''
-              podcast.title =  podcastUrl.title|| ''
-              podcast.image= podcastUrl.image?.url|| ''
-              podcast.description = podcastUrl.description || ''
-              podcast.feed_rss_url = url
-              podcast.last_published = podcastUrl.items[0].pubDate|| ''
-              await podcast.related("user_id").associate(user);
-
-
-
-            // await Episode.createMany(podcast.items.map(item => {
-            //     return {
-            //         published: new Date(item.pubDate || ''),
-            //         title: item.title,
-            //         description: item.summary?.toString(),
-            //         link: item.enclosure?.url,
-            //         image: item.itunes.image,
-            //         podcast_id: pod.id
-            //     }
-            // }))
-
-            // return pod
+            return response.status(200).send({
+                message: "Success",
+                data: "Created podcast!"
+            })
         } catch (error) {
           console.log(error)
             return response.status(400).send('Fail to save podcast!')
@@ -53,7 +52,7 @@ export default class PodcastController {
     }
 
     public async index() {
-        const podcast = await Podcast.query().preload('user_id')
+        const podcast = await Podcast.all()
         return podcast
 
     }

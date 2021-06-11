@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import Episode from './Episode'
 
 
 export default class Podcast extends BaseModel {
@@ -28,8 +29,14 @@ export default class Podcast extends BaseModel {
   @column()
   public author: string
 
-  @belongsTo(() => User)
-  public user_id: BelongsTo<typeof User>
+  @column()
+  public user_id: number
+
+  @belongsTo(() => User, {foreignKey: 'user_id', localKey: 'id'})
+  public user: BelongsTo<typeof User>
+
+  @hasMany(() => Episode)
+  public episodes: HasMany<typeof Episode>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
