@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import { v4 } from 'uuid';
 
 export default class UserController {
   public async index() {
@@ -11,21 +12,15 @@ export default class UserController {
       const body = ctx.request.body()
 
       try {
-        const userById = await User.findBy('id', body.userId)
-
-        if(userById) {
-          return ctx.response.status(403).send({
-            message: 'Error',
-            data: 'User alredy exists!'
-          })
-        }
-        await User.create({
-          id: body.userId,
+        
+        const id = v4()
+        const user = await User.create({
+          id: id,
           email: body.email,
           name: body.name,
           image: body.image
         })
-        return ctx.response.status(200).cookie('user', {userId: body.userId}).send({message: 'Success'})
+        return ctx.response.status(200).cookie('user', {userId: id}).send({message: 'Success', data: user})
         
       } catch (error) {
         

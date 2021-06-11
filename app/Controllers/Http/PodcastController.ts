@@ -13,7 +13,7 @@ export default class PodcastController {
         
         try {
             const podcast = await this.parser.parseURL(url)
-            // console.log(pod.items[0].enclosure?.url)
+
             const pod = await Podcast.create({
                 author: podcast.itunes?.author,
                 title: podcast.title,
@@ -30,9 +30,10 @@ export default class PodcastController {
                 return {
                     published: new Date(item.pubDate || ''),
                     title: item.title,
-                    description: item.summary,
+                    description: item.summary?.toString(),
                     link: item.enclosure?.url,
-                    image: item.itunes.image
+                    image: item.itunes.image,
+                    podcast_id: pod.id
                 }
             }))
 

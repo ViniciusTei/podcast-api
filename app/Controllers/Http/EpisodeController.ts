@@ -8,7 +8,7 @@ export default class EpisodeContoller {
         const { page } = request.params()
         const limit = 15
 
-        const episodes = Database.from('episodes').paginate(page, limit)
+        const episodes = await Database.from('episodes').paginate(page, limit)
 
         return response.status(200).send({
             message: "Sucessa",
