@@ -45,4 +45,23 @@ export default class PodcastController {
             return response.status(400).send('Fail to get podcast!')
         }
     }
+
+    public async delete({request, response}: HttpContextContract) {
+        const { podcastId } = request.params()
+
+        try {
+            const podcast = await Podcast.findByOrFail('id', podcastId)
+            await podcast.delete()
+
+            return response.status(200).send({
+                message: "Success",
+                data: "Podcas deleted!"
+            })
+        } catch (error) {
+            return response.status(500).send({
+                message: 'Error',
+                data: 'Internal error!'
+              })
+        }
+    }
 }
