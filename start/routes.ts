@@ -31,3 +31,6 @@ Route.delete('/podcasts/:podcastId', 'PodcastController.delete').middleware('rss
 
 Route.get('/episodes/:page', 'EpisodeController.index')
 Route.delete('/episodes', 'EpisodeController.deleteAll')
+
+Route.get('/avaliation', 'AvaliationController.index')
+Route.post('/avaliation', 'AvaliationController.create')
