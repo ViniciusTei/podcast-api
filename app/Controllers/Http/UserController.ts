@@ -7,10 +7,16 @@ export default class UserController {
     return user
   }
 
-  public async create(ctx: HttpContextContract) {
+  public async session(ctx: HttpContextContract) {
       const body = ctx.request.body()
 
       try {
+        const find = await User.findBy('email', body.email)
+        
+        if(find) {
+          return ctx.response.status(200).cookie('user', {userId: find.id}).send({message: 'Success', data: find})
+        }
+
         const user = await User.create({
           email: body.email,
           name: body.name,
