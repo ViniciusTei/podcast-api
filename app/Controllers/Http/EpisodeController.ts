@@ -1,5 +1,4 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 
 import Episode from "App/Models/Episode"
 
@@ -8,7 +7,10 @@ export default class EpisodeContoller {
         const { page } = request.params()
         const limit = 15
 
-        const episodes = await Database.from('episodes').paginate(page, limit)
+        const episodes = await Episode
+            .query()
+            .leftJoin('avaliations', 'episodes.id', 'avaliations.episode_id')
+            .paginate(page, limit)
 
         return response.status(200).send({
             message: "Sucessa",
