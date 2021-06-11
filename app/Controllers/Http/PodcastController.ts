@@ -14,7 +14,6 @@ export default class PodcastController {
         const podcast = new Podcast();
 
         const user = await User.findOrFail(user_id);
-        console.log(user.serialize())
 
         try {
             const podcastUrl = await this.parser.parseURL(url)
@@ -37,7 +36,7 @@ export default class PodcastController {
                     ep.link = item.enclosure!.url,
                     ep.image = item.itunes.image,
                     ep.podcast_id = podcast.id
-                    
+
                     await ep.related("podcast").associate(podcast)
             })
 
@@ -46,15 +45,23 @@ export default class PodcastController {
                 data: "Created podcast!"
             })
         } catch (error) {
-          console.log(error)
             return response.status(400).send('Fail to save podcast!')
         }
 
     }
 
-    public async index() {
-        const podcast = await Podcast.all()
-        return podcast
+    public async index({  response }: HttpContextContract) {
+
+        try {
+            const podcast = await Podcast.all()
+            return response.status(200).send({
+                message: "Success",
+                data: podcast
+            })
+        } catch (error) {
+            return response.status(400).send('Fail to get podcast!')
+        }
+        
 
     }
 
@@ -63,7 +70,10 @@ export default class PodcastController {
 
         try {
             const podcast = await Podcast.query().where('user_id', userId)
-            return podcast
+            return response.status(200).send({
+                message: "Success",
+                data: podcast
+            })
         } catch (error) {
             return response.status(400).send('Fail to get podcast!')
         }
