@@ -1,32 +1,39 @@
 {
   "name": "podcast-api",
   "version": "1.0.0",
-  "private": true,
+  "description": "A api to listen to your favorites podcasts from a rss feed",
+  "main": "index.js",
   "scripts": {
-    "build": "node ace build --production",
-    "start": "node server.js",
-    "dev": "node ace serve --watch",
-    "makeModel": "node ace make:model"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.ts"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@adonisjs/assembler": "^5.0.0",
-    "@types/uuid": "^8.3.0",
-    "adonis-preset-ts": "^2.1.0",
-    "pino-pretty": "^5.0.2",
-    "typescript": "~4.2",
-    "youch": "^2.2.2",
-    "youch-terminal": "^1.1.1"
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^16.10.3",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
-    "@adonisjs/core": "^5.1.0",
-    "@adonisjs/lucid": "^15.0.0",
-    "@adonisjs/repl": "^3.0.0",
-    "luxon": "^1.27.0",
-    "proxy-addr": "^2.0.7",
-    "reflect-metadata": "^0.1.13",
-    "rss-parser": "^3.12.0",
-    "source-map-support": "^0.5.19",
-    "sqlite3": "^5.0.2",
-    "uuid": "^8.3.2"
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.10"
   }
 }
