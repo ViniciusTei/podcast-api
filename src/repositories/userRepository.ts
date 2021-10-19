@@ -5,12 +5,14 @@ type UserModel = {
     name: string
     email: string
     password: string
+    podcasts: unknown
 }
 
 type UserResponse = {
     _id: string
     name: string
     email: string
+    podcasts: unknown
 }
 
 const fieldsToRetrieve = '_id name email';
