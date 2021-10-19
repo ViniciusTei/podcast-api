@@ -5,8 +5,12 @@ import EpisodesRepository from '../repositories/episodesRepository';
 import rss from '../utils/rssParser';
 
 const PodcastsController = {
-  index(req: Request, res: Response) {
-    res.send('index podcasts');
+  async index(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const podcasts = await PodcastsRepository.findeByUserId(id);
+
+    res.send(podcasts);
   },
   async create(req: Request, res: Response) {
     const { rssFeed } = req.body;

@@ -24,6 +24,11 @@ const PodcastsRepository = {
     const podcast = Podcasts.findOne({ title }).exec();
     return podcast;
   },
+  async findeByUserId(userId: string) {
+    const response = await Podcasts.find({ user: userId }, '_id title description image link').exec();
+
+    return response;
+  },
 };
 
 export default PodcastsRepository;
