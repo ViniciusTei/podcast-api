@@ -63,7 +63,19 @@ const PodcastsController = {
       total_episodes: episodes.length,
     });
   },
+  async delete(req: Request, res: Response) {
+    try {
+      const { podcastId } = req.query;
+      await EpisodesRepository.deleteByPodcastId(podcastId as string);
+      await PodcastsRepository.deleteByPodcastId(podcastId as string);
 
+      res.send('Podcast deleted!');
+    } catch (error) {
+      res.status(500).send({
+        error,
+      });
+    }
+  },
 };
 
 export default PodcastsController;

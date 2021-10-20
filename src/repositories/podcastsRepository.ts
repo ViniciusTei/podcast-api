@@ -31,6 +31,9 @@ const PodcastsRepository = {
 
     return response;
   },
+  async deleteByPodcastId(podcastId: string) {
+    await Podcasts.deleteOne({ _id: podcastId });
+  },
 };
 
 export default PodcastsRepository;

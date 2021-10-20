@@ -19,6 +19,7 @@ router.delete('/users/:id', auth, UserController.delete); // private
 
 router.get('/podcasts/:id', auth, PodcastsController.index);
 router.post('/podcasts/:id', auth, PodcastsController.create);
+router.delete('/podcasts/:id', auth, PodcastsController.delete);
 
 router.get('/episodes/:id', auth, EpisodesController.index);
 export default router;

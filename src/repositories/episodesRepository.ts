@@ -19,6 +19,9 @@ const EpisodesRepository = {
     const episodes = await EpisodeModel.find({ podcastId }, fields).exec();
     return episodes;
   },
+  async deleteByPodcastId(podcastId: string) {
+    await EpisodeModel.deleteMany({ podcastId });
+  },
 };
 
 export default EpisodesRepository;
