@@ -27,7 +27,7 @@ const PodcastsRepository = {
     return podcast;
   },
   async findeByUserId(userId: string) {
-    const response = await Podcasts.find({ user: userId }, '_id title description image link').exec();
+    const response = await Podcasts.find({ user: userId }, '_id title description image link rssFeed').exec();
 
     return response;
   },

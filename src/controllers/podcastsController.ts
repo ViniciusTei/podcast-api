@@ -48,9 +48,9 @@ const PodcastsController = {
     const episodes = response.items.map((episode) => ({
       title: episode.title || '',
       audioUrl: episode.enclosure?.url || '',
-      audioLength: (typeof episode.enclosure?.length === 'string')
-        ? parseInt(episode.enclosure?.length || '', 10)
-        : episode.enclosure?.length || 0,
+      audioLength: episode.enclosure?.length
+        ? episode.enclosure?.length
+        : episode.itunes?.duration,
       description: episode.content || '',
       releaseDate: episode.isoDate || '',
       podcastId: podcastCreated._id,

@@ -2,6 +2,7 @@ import express from 'express';
 import SessionController from './controllers/sessionController';
 import UserController from './controllers/userController';
 import PodcastsController from './controllers/podcastsController';
+import EpisodesController from './controllers/episodesController';
 
 import auth from './middleware/authentication';
 
@@ -19,4 +20,5 @@ router.delete('/users/:id', auth, UserController.delete); // private
 router.get('/podcasts/:id', auth, PodcastsController.index);
 router.post('/podcasts/:id', auth, PodcastsController.create);
 
+router.get('/episodes/:id', auth, EpisodesController.index);
 export default router;

@@ -8,10 +8,16 @@ type Episdoes = {
     releaseDate: string
     podcastId: string
 }
+const fields = '_id title description audioUrl audioLength releaseDate';
+
 const EpisodesRepository = {
   async create(episodes: Episdoes[]) {
     const model = new EpisodeModel();
     await model.collection.insertMany(episodes);
+  },
+  async findEpisodes(podcastId: string) {
+    const episodes = await EpisodeModel.find({ podcastId }, fields).exec();
+    return episodes;
   },
 };
 
