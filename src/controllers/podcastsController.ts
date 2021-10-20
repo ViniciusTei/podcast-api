@@ -33,6 +33,7 @@ const PodcastsController = {
       image: response.image?.url || '',
       link: response.link || '',
       user: id,
+      rssFeed,
     };
 
     const findPodcast = await PodcastsRepository.findeByTitle(podcast.title);

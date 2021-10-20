@@ -6,6 +6,7 @@ type PodcastModel = {
     image: string
     link: string
     user: string
+    rssFeed: string
 }
 
 const PodcastsRepository = {
@@ -16,6 +17,7 @@ const PodcastsRepository = {
     newPodcast.image = podcast.image;
     newPodcast.link = podcast.link;
     newPodcast.user = podcast.user;
+    newPodcast.rssFeed = podcast.rssFeed;
 
     newPodcast.save();
     return newPodcast;

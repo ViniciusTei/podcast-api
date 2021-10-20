@@ -7,6 +7,7 @@ type PodcastModel = {
     description: string
     image: string
     link: string
+    rssFeed: string
     user: SchemaDefinitionProperty<string>
     episodes: SchemaDefinitionProperty<Array<string>>
 }
@@ -29,6 +30,11 @@ const podcastSchema = new Schema<PodcastModel>({
   link: {
     type: String,
     required: true,
+  },
+  rssFeed: {
+    type: String,
+    required: true,
+    unique: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
