@@ -1,5 +1,5 @@
-// 'https://anchor.fm/s/fa5d110/podcast/rss'
 import { Response, Request } from 'express';
+import timeStringToSeconds from '../utils/timeStringToSeconds';
 import PodcastsRepository from '../repositories/podcastsRepository';
 import EpisodesRepository from '../repositories/episodesRepository';
 import rss from '../utils/rssParser';
@@ -48,8 +48,8 @@ const PodcastsController = {
     const episodes = response.items.map((episode) => ({
       title: episode.title || '',
       audioUrl: episode.enclosure?.url || '',
-      audioLength: episode.enclosure?.length
-        ? episode.enclosure?.length
+      audioLength: typeof episode.itunes?.duration === 'string'
+        ? timeStringToSeconds(episode.itunes?.duration)
         : episode.itunes?.duration,
       description: episode.content || '',
       releaseDate: episode.isoDate || '',

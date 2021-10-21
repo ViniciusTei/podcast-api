@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import { compareDesc } from 'date-fns';
 import rss from '../utils/rssParser';
+import timeStringToSeconds from '../utils/timeStringToSeconds';
 
 import EpisodesRepository from '../repositories/episodesRepository';
 import PodcastsRepository from '../repositories/podcastsRepository';
@@ -41,8 +42,8 @@ async function searchForNewEpisodes(podcast: Podcast, lastEpisode: Episode) {
     episodes.push({
       title: feed.items[episodesIndex].title || '',
       audioUrl: feed.items[episodesIndex].enclosure?.url || '',
-      audioLength: feed.items[episodesIndex].enclosure?.length
-        ? feed.items[episodesIndex].enclosure?.length
+      audioLength: typeof feed.items[episodesIndex].itunes?.duration === 'string'
+        ? timeStringToSeconds(feed.items[episodesIndex].itunes?.duration)
         : feed.items[episodesIndex].itunes?.duration,
       description: feed.items[episodesIndex].content || '',
       releaseDate: feed.items[episodesIndex].isoDate || '',
