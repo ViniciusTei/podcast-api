@@ -18,14 +18,13 @@ export default function auth(
   // eslint-disable-next-line consistent-return
   jwt.verify(token, process.env.SECRET ?? '', (err, user) => {
     if (err) {
-      return res.send(401).send({
+      return res.status(401).send({
         message: 'Invalid token!',
       });
     }
 
     const userId = req.params.id;
     if (userId !== user?._id) {
-      console.error('first');
       return res.status(401).send({
         message: 'Invalid token!',
       });

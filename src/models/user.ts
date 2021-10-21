@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaDefinitionProperty } from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -6,6 +6,7 @@ type UserModel = {
     name: string
     email: string
     password: string
+    podcasts: SchemaDefinitionProperty<Array<string>>;
 }
 
 const userSchema = new Schema<UserModel>({
@@ -23,6 +24,12 @@ const userSchema = new Schema<UserModel>({
     required: true,
 
   },
+  podcasts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'podcasts',
+    },
+  ],
 });
 
 const userModel = mongoose.model<UserModel>('users', userSchema);
