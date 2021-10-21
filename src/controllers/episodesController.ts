@@ -42,9 +42,7 @@ async function searchForNewEpisodes(podcast: Podcast, lastEpisode: Episode) {
     episodes.push({
       title: feed.items[episodesIndex].title || '',
       audioUrl: feed.items[episodesIndex].enclosure?.url || '',
-      audioLength: typeof feed.items[episodesIndex].itunes?.duration === 'string'
-        ? timeStringToSeconds(feed.items[episodesIndex].itunes?.duration)
-        : feed.items[episodesIndex].itunes?.duration,
+      audioLength: timeStringToSeconds(feed.items[episodesIndex].itunes?.duration),
       description: feed.items[episodesIndex].content || '',
       releaseDate: feed.items[episodesIndex].isoDate || '',
       podcastId: podcast._id,
