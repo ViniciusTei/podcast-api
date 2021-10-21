@@ -32,6 +32,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
+            cd /var/www/podcast-api
             git pull
             npm install
             npm run build
