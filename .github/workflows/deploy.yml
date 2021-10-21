@@ -22,19 +22,34 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: ⚙️ Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      # Runs a single command using the runners shell
-      - name: 🚀 Deploy app to server
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{secrets.SSH_USERNAME}}
-          
-          script: |
-            cd /var/www/podcast-api
-            git pull
-            npm install
-            npm run build
-            pm2 restart all
-            sudo service nginx restart
+      - name: ✂️ Stop the server
+        run: ssh staging 'sudo pm2 stop all'
+
+      - name: 💾 Check out the source
+        run: ssh staging 'cd /var/www/podcast-api && git fetch && git reset --hard origin/master'
+
+      - name: 👨‍💻 Start application
+        if: ${{ always() }}
+        run: ssh staging 'sudo pm2 start all'
+      
+      - name: 🚀 Start the server
+        if: ${{ always() }}
+        run: ssh staging 'sudo service nginx restart'
