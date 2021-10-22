@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 dotenv.config();
 
-app.use('/', routes);
+app.use('/v1/docs', express.static('docs'));
+app.use('/v1', routes);
 
 if (process.env.MONGO_CONNECT_URL) {
   mongoose.connect(process.env.MONGO_CONNECT_URL);

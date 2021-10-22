@@ -31,10 +31,7 @@ const UserController = {
 
       const newUser: User = await UserRepository.create(user);
 
-      res.send({
-        message: 'Successufily created user!',
-        user: newUser,
-      });
+      res.json(newUser);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -46,7 +43,6 @@ const UserController = {
     try {
       const newUser = await UserRepository.update({ _id: id, ...data });
       res.send({
-        message: 'User successfuly updated!',
         user: newUser,
       });
     } catch (error) {

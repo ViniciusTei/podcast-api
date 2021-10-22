@@ -44,9 +44,13 @@ const SessionController = {
       });
 
       res.send({
-        message: 'Successfuly logged in!',
         token: jwtToken,
         refresh_token: refresh,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        },
       });
     } else {
       throw new Error('Missing SECRET environment variable!');

@@ -56,6 +56,7 @@ const PodcastsController = {
 
     await EpisodesRepository.create(episodes);
     res.json({
+      _id: podcastCreated._id,
       ...podcast,
       episodes,
       total_episodes: episodes.length,
