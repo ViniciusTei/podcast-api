@@ -23,33 +23,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: ⚙️ Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{ secrets.SSH_USERNAME }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-
-      - name: ✂️ Stop the server
-        run: ssh staging 'sudo pm2 stop all'
-
-      - name: 💾 Check out the source
-        run: ssh staging 'cd /var/www/podcast-api && git fetch && git reset --hard origin/master'
-
-      - name: 👨‍💻 Start application
-        if: ${{ always() }}
-        run: ssh staging 'sudo pm2 start all'
-      
-      - name: 🚀 Start the server
-        if: ${{ always() }}
-        run: ssh staging 'sudo service nginx restart'
+      - name: 🚀 Deploy application
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /var/www/podcast-api
+            sudo pm2 stop all
+            git fetch && git reset --hard origin/master
+            npm install
+            sudo pm2 start all
+            sudo service nginx restart
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY}}
