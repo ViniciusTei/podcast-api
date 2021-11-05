@@ -29,7 +29,10 @@ function sortEpisodes(a: Episode, b: Episode) {
   return compareDesc(new Date(a.releaseDate), new Date(b.releaseDate));
 }
 
-async function searchForNewEpisodes(podcast: Podcast, lastEpisode: Episode) {
+async function searchForNewEpisodes(
+  podcast: Podcast,
+  lastEpisode: Episode,
+): undefined | Promise<Episode[]> {
   const feed = await rss(podcast.rssFeed);
   let episodesIndex = 0;
 
@@ -55,7 +58,11 @@ async function searchForNewEpisodes(podcast: Podcast, lastEpisode: Episode) {
     await EpisodesRepository.create(episodes);
     // eslint-disable-next-line no-console
     console.log('⚡️[server]: Episodes updated');
+    const episodesResponse = await EpisodesRepository.findEpisodes(podcast._id);
+    return episodesResponse as Episode[];
   }
+
+  return undefined;
 }
 
 const EpisodesController = {
@@ -78,8 +85,14 @@ const EpisodesController = {
         const episodesByPodcast = await EpisodesRepository.findEpisodes(podcast._id);
         // check for new episodes in each podcast
         episodesByPodcast.sort(sortEpisodes);
-        await searchForNewEpisodes(podcast, episodesByPodcast[0]);
-        episodes = episodes.concat(episodesByPodcast);
+        const newEpisodes = await searchForNewEpisodes(podcast, episodesByPodcast[0]);
+
+        if (newEpisodes) {
+          newEpisodes.sort(sortEpisodes);
+          episodes = episodes.concat(newEpisodes);
+        } else {
+          episodes = episodes.concat(episodesByPodcast);
+        }
       }
 
       episodes.sort(sortEpisodes);
