@@ -28,10 +28,11 @@ jobs:
         with:
           command: |
             cd /var/www/podcast-api
-            sudo pm2 stop all
+            sudo pm2 stop api
             git fetch && git reset --hard origin/master
             npm install
-            sudo pm2 start all
+            npm run build
+            sudo pm2 restart api
             sudo service nginx restart
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
