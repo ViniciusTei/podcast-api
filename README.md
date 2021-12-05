@@ -2,8 +2,8 @@
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/ViniciusTei/podcast-api?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/ViniciusTei/podcast-api?style=for-the-badge)
 
 <!-- <img src="exemplo-image.png" alt="exemplo imagem"> -->
 
@@ -14,7 +14,12 @@
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-- [ ] Refresh token (em desenvolvimento)
+- [ ] Fazer ajustes na model de episodios
+  - [x] Adicionar campos de thumbnail e members
+  - [ ] Corrigir alguns episodios que vem sem o audioLength
+- [ ] Trazer informacoes sobre os podcasts na rota de episodios, como nome do podcast
+- [ ] Adicionar avaliacao de episodios e podcasts
+- [ ] Refresh token
 
 
 ## 📫 Contribuindo para podcast-api

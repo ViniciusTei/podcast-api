@@ -8,6 +8,8 @@ type EpisodeModel = {
     audioUrl: string
     audioLength: number
     releaseDate: string
+    thumbnail: string
+    members: string
     podcastId: SchemaDefinitionProperty<string>
 }
 
@@ -31,6 +33,14 @@ const episodeSchema = new Schema<EpisodeModel>({
     required: true,
   },
   releaseDate: {
+    type: String,
+    required: true,
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+  },
+  members: {
     type: String,
     required: true,
   },
