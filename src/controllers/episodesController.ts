@@ -9,7 +9,7 @@ import EpisodesService from '../services/episodesService';
 const EpisodesController = {
   async index(req: Request, res: Response) {
     const { id } = req.params;
-    const { page = 0, pageSize = 10 } = req.query;
+    const { page = 1, pageSize = 10 } = req.query;
 
     try {
       const service = new EpisodesService(EpisodesRepository, PodcastsRepository, UserRepository);

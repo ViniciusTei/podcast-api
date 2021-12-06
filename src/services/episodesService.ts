@@ -114,14 +114,23 @@ export default class EpisodesService {
     const numberPage = typeof page !== 'number' ? parseInt(page as string, 10) : page;
     const numberPageSize = typeof pageSize !== 'number' ? parseInt(pageSize as string, 10) : pageSize;
 
-    const offset = numberPage === 0 ? numberPage : numberPage * numberPageSize;
+    const offset = numberPage === 1 ? (numberPage - 1) : (numberPage - 1) * numberPageSize;
 
     const episodesResponse = [];
+    let countPages = 0;
 
     for (let i = offset; i < (numberPageSize + offset); i += 1) {
-      episodesResponse.push(episodes[i]);
+      if (episodes[i]) {
+        episodesResponse.push(episodes[i]);
+        countPages += 1;
+      }
     }
 
-    return episodesResponse;
+    return {
+      data: episodesResponse,
+      page: numberPage,
+      pageSize: countPages,
+      totalPages: Math.ceil(episodes.length / numberPageSize),
+    };
   }
 }
