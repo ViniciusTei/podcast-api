@@ -32,6 +32,8 @@ Para contribuir com podcast-api, siga estas etapas:
 4. Envie para o branch original: `git push origin podcast-api / <local>`
 5. Crie a solicitação de pull.
 
+Para ver a documentação da api [clique aqui](https://app.swaggerhub.com/apis/vinicius39/podcasts/1.0.0).
+
 Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request). -->
 
 ## 🤝 Colaboradores
