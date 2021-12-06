@@ -11,7 +11,7 @@ type Episdoes = {
     podcastId: string
 }
 
-const fields = '_id title description audioUrl audioLength releaseDate';
+const fields = '_id title description audioUrl audioLength releaseDate members thumbnail';
 
 const EpisodesRepository = {
   async create(episodes: Episdoes[]) {

@@ -2,8 +2,8 @@
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-![GitHub repo size](https://img.shields.io/github/repo-size/ViniciusTei/podcast-api?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/ViniciusTei/podcast-api?style=for-the-badge)
+![GitHub repo build](https://img.shields.io/github/workflow/status/ViniciusTei/podcast-api/CI)
+![GitHub language count](https://img.shields.io/github/languages/count/ViniciusTei/podcast-api)
 
 <!-- <img src="exemplo-image.png" alt="exemplo imagem"> -->
 
