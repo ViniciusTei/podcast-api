@@ -85,14 +85,8 @@ export default class EpisodesService {
     return undefined;
   }
 
-  async findAllFromPodcast(page: string, pageSize: string, userId: string) {
-    const user = await this.userRepository.findOne(userId);
-
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    const podcasts = await this.podcastsRepository.findeByUserId(user._id);
+  private async getAllEpisodes(userId: string) {
+    const podcasts = await this.podcastsRepository.findeByUserId(userId);
     let episodes: Episode[] = [];
 
     for (const podcast of podcasts) {
@@ -110,6 +104,18 @@ export default class EpisodesService {
     }
 
     episodes.sort(EpisodesService.sortEpisodes);
+
+    return episodes;
+  }
+
+  async findAllFromPodcast(page: string, pageSize: string, userId: string) {
+    const user = await this.userRepository.findOne(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const episodes = await this.getAllEpisodes(user._id);
 
     const numberPage = typeof page !== 'number' ? parseInt(page as string, 10) : page;
     const numberPageSize = typeof pageSize !== 'number' ? parseInt(pageSize as string, 10) : pageSize;
@@ -132,5 +138,11 @@ export default class EpisodesService {
       pageSize: countPages,
       totalPages: Math.ceil(episodes.length / numberPageSize),
     };
+  }
+
+  async findEpisode(episodeId: string) {
+    const episode = await this.episodesRepository.findEpisodeById(episodeId);
+
+    return episode;
   }
 }

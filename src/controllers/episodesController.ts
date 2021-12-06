@@ -22,6 +22,22 @@ const EpisodesController = {
       });
     }
   },
+
+  async show(req: Request, res: Response) {
+    const { episodeId } = req.body;
+
+    try {
+      const service = new EpisodesService(EpisodesRepository, PodcastsRepository, UserRepository);
+
+      const episode = await service.findEpisode(episodeId);
+
+      res.send(episode);
+    } catch (error) {
+      res.status(500).send({
+        error,
+      });
+    }
+  },
 };
 
 export default EpisodesController;

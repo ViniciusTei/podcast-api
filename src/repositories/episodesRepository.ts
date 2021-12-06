@@ -27,6 +27,12 @@ const EpisodesRepository = {
   async deleteByPodcastId(podcastId: string) {
     await EpisodeModel.deleteMany({ podcastId });
   },
+  async findEpisodeById(episodeId: string) {
+    const response = await EpisodeModel.findOne({ _id: episodeId }, fields)
+      .exec();
+
+    return response;
+  },
 };
 
 export default EpisodesRepository;

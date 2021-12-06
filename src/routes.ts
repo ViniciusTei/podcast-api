@@ -22,4 +22,5 @@ router.post('/podcasts/:id', auth, PodcastsController.create);
 router.delete('/podcasts/:id', auth, PodcastsController.delete);
 
 router.get('/episodes/:id', auth, EpisodesController.index);
+router.get('/episodes/:id/detail', auth, EpisodesController.show);
 export default router;
