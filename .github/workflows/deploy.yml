@@ -20,6 +20,12 @@ jobs:
       
       - name: Stop api
         run: pm2 stop api
+        
+      - name: Fetch brach
+        run: git fetch
+      
+      - name: Reset branch
+        run: git reset --hard origin/master
       
       - name: Instal dependecies
         run: npm install
