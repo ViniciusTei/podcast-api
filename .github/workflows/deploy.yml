@@ -18,24 +18,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
       
-      - name: Stop api
-        run: pm2 stop api
+      - name: Run deploy script
+        run: sh deploy.sh
         
-      - name: Fetch brach
-        run: git fetch
-      
-      - name: Reset branch
-        run: git reset --hard origin/master
-      
-      - name: Instal dependecies
-        run: npm install
-        
-      - name: Build
-        run: npm run build
-      
-      - name: Restart api
-        run: pm2 restart api
-      
-      - name: Restart server
-        run: service nginx restart
 
