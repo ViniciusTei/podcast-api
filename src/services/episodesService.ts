@@ -35,11 +35,11 @@ export default class EpisodesService {
 
   constructor(
     episodesRepository: typeof EpisodesRepository,
-    podacastsRepository: typeof PodcastsRepository,
+    podcastsRepository: typeof PodcastsRepository,
     userRepository: typeof UserRepository,
   ) {
     this.episodesRepository = episodesRepository;
-    this.podcastsRepository = podacastsRepository;
+    this.podcastsRepository = podcastsRepository;
     this.userRepository = userRepository;
   }
 
