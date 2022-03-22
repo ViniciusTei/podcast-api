@@ -1,6 +1,6 @@
 import EpisodeModel from '../models/episode';
 
-type Episdoes = {
+type EpisodesModel = {
     title: string
     description: string
     audioUrl: string
@@ -14,7 +14,7 @@ type Episdoes = {
 const fields = '_id title description audioUrl audioLength releaseDate members thumbnail';
 
 const EpisodesRepository = {
-  async create(episodes: Episdoes[]) {
+  async create(episodes: EpisodesModel[]) {
     const model = new EpisodeModel();
     await model.collection.insertMany(episodes);
   },

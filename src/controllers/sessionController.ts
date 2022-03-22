@@ -43,7 +43,8 @@ const SessionController = {
         expiresIn: 60 * 60 * 24 * 365, // 1 ano
       });
 
-      res.send({
+      res.set('Content-Type', 'application/json');
+      res.status(200).send({
         token: jwtToken,
         refresh_token: refresh,
         user: {

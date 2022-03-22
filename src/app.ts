@@ -17,8 +17,12 @@ app.use('/v1/docs', express.static('docs'));
 app.use('/v1', routes);
 
 if (process.env.MONGO_CONNECT_URL) {
-  mongoose.connect(process.env.MONGO_CONNECT_URL);
-  console.log('⚡️[server]: Database connected!');
+  try {
+    mongoose.connect(process.env.MONGO_CONNECT_URL);
+    console.log('⚡️[server]: Database connected!');
+  } catch (error) {
+    console.log('⚡️[server]: Database connection failed!', error);
+  }
 }
 
 app.use((req, res) => {
