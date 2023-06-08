@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import EpisodeModel from '../models/episode';
 
 type EpisodesModel = {
@@ -27,7 +28,7 @@ const EpisodesRepository = {
   async deleteByPodcastId(podcastId: string) {
     await EpisodeModel.deleteMany({ podcastId });
   },
-  async findEpisodeById(episodeId: string) {
+  async findEpisodeById(episodeId: ObjectId) {
     const response = await EpisodeModel.findOne({ _id: episodeId }, fields)
       .exec();
 

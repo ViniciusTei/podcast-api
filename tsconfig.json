@@ -6,10 +6,10 @@
       "outDir": "./build",
       "esModuleInterop": true,
       "strict": false,
-      "resolveJsonModule": true
+      "resolveJsonModule": true,
     },
     "include": [
         "./**/*"
     ],
-    "exclude": ["./build"]
+    "exclude": ["./build", "./tests"]
 }

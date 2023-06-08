@@ -1,8 +1,9 @@
-import mongoose, { SchemaDefinitionProperty } from 'mongoose';
+import mongoose, { ObjectId, SchemaDefinitionProperty } from 'mongoose';
 
 const { Schema } = mongoose;
 
-type UserModel = {
+export type UserModel = {
+    _id?: ObjectId
     name: string
     email: string
     password: string

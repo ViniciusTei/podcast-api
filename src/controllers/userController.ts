@@ -1,11 +1,6 @@
 import { Response, Request } from 'express';
 import UserRepository from '../repositories/userRepository';
 
-type User = {
-    _id: string
-    name: string
-    email: string
-}
 const UserController = {
   async index(req: Request, res: Response) {
     const users = await UserRepository.findAll();
@@ -29,7 +24,7 @@ const UserController = {
         res.status(400).send({ message: 'User already exists!' });
       }
 
-      const newUser: User = await UserRepository.create(user);
+      const newUser = await UserRepository.create(user);
 
       res.json(newUser);
     } catch (error) {

@@ -5,26 +5,8 @@ import timeStringToSeconds from '../utils/timeStringToSeconds';
 import EpisodesRepository from '../repositories/episodesRepository';
 import PodcastsRepository from '../repositories/podcastsRepository';
 import UserRepository from '../repositories/userRepository';
-
-type Episode = {
-  _id: string
-  title: string
-  description: string
-  audioUrl: string
-  audioLength: number
-  thumbnail: string
-  members: string
-  releaseDate: string
-}
-
-type Podcast = {
-  _id: string
-  title: string
-  description: string
-  image: string
-  link: string
-  rssFeed: string
-}
+import { EpisodeModel } from '../models/episode';
+import { PodcastModel } from '../models/podcast';
 
 export default class EpisodesService {
   private episodesRepository: typeof EpisodesRepository;
@@ -43,14 +25,14 @@ export default class EpisodesService {
     this.userRepository = userRepository;
   }
 
-  private static sortEpisodes(a: Episode, b: Episode) {
+  private static sortEpisodes(a: EpisodeModel, b: EpisodeModel) {
     return compareDesc(new Date(a.releaseDate), new Date(b.releaseDate));
   }
 
   private static async searchForNewEpisodes(
-    podcast: Podcast,
-    lastEpisode: Episode,
-  ): undefined | Promise<Episode[]> {
+    podcast: PodcastModel,
+    lastEpisode: EpisodeModel,
+  ): undefined | Promise<EpisodeModel[]> {
     const feed = await rss(podcast.rssFeed);
     let episodesIndex = 0;
 
@@ -78,8 +60,8 @@ export default class EpisodesService {
       await EpisodesRepository.create(episodes);
       // eslint-disable-next-line no-console
       console.log('⚡️[server]: Episodes updated');
-      const episodesResponse = await EpisodesRepository.findEpisodes(podcast._id);
-      return episodesResponse as Episode[];
+      const episodesResponse = await EpisodesRepository.findEpisodes(podcast._id.toString());
+      return (episodesResponse as unknown) as EpisodeModel[];
     }
 
     return undefined;
@@ -87,10 +69,10 @@ export default class EpisodesService {
 
   private async getAllEpisodes(userId: string) {
     const podcasts = await this.podcastsRepository.findeByUserId(userId);
-    let episodes: Episode[] = [];
+    let episodes: EpisodeModel[] = [];
 
     for (const podcast of podcasts) {
-      const episodesByPodcast = await this.episodesRepository.findEpisodes(podcast._id);
+      const episodesByPodcast = await this.episodesRepository.findEpisodes(podcast._id.toString());
       // check for new episodes in each podcast
       episodesByPodcast.sort(EpisodesService.sortEpisodes);
       const newEpisodes = await EpisodesService.searchForNewEpisodes(podcast, episodesByPodcast[0]);
@@ -115,7 +97,7 @@ export default class EpisodesService {
       throw new Error('User not found');
     }
 
-    const episodes = await this.getAllEpisodes(user._id);
+    const episodes = await this.getAllEpisodes(user._id.toString());
 
     const numberPage = typeof page !== 'number' ? parseInt(page as string, 10) : page;
     const numberPageSize = typeof pageSize !== 'number' ? parseInt(pageSize as string, 10) : pageSize;
@@ -141,7 +123,8 @@ export default class EpisodesService {
   }
 
   async findEpisode(episodeId: string) {
-    const episode = await this.episodesRepository.findEpisodeById(episodeId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const episode = await this.episodesRepository.findEpisodeById(episodeId as any);
 
     return episode;
   }

@@ -1,6 +1,8 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+import { UserModel } from '../models/user';
+
 export default function auth(
   req: Request,
   res: Response,
@@ -24,7 +26,7 @@ export default function auth(
     }
 
     const userId = req.params.id;
-    if (userId !== user?._id) {
+    if (userId !== (user as UserModel)?._id.toString()) {
       return res.status(401).send({
         message: 'Invalid token!',
       });

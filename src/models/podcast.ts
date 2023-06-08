@@ -1,8 +1,9 @@
-import mongoose, { SchemaDefinitionProperty } from 'mongoose';
+import mongoose, { ObjectId, SchemaDefinitionProperty } from 'mongoose';
 
 const { Schema } = mongoose;
 
-type PodcastModel = {
+export type PodcastModel = {
+    _id?: ObjectId
     title: string
     description: string
     image: string
