@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "dev": "nodemon index.ts",
     "build": "tsc",
     "start:prod": "node build/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["podcast", "api", "express", "typescript"],
+  "author": "ViniciusTei",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.12",
