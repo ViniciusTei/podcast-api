@@ -3,15 +3,9 @@ import jwt from 'jsonwebtoken';
 
 import UserRepository from '../repositories/userRepository';
 import hash from '../utils/crypto';
+import { UserModel } from '../models/user';
 
 interface ISession {
-    email: string
-    password: string
-}
-
-interface IUser {
-    _id: string
-    name: string
     email: string
     password: string
 }
@@ -21,7 +15,7 @@ const SessionController = {
     const { email, password }: ISession = <ISession> req.body;
     const hashedPassword = hash(password);
 
-    const user: IUser | null = await UserRepository.findByEmail(email);
+    const user: UserModel | null = await UserRepository.findByEmail(email);
 
     if (!user) {
       res.status(400).send({ message: 'User or password incorrect!' });
@@ -43,7 +37,8 @@ const SessionController = {
         expiresIn: 60 * 60 * 24 * 365, // 1 ano
       });
 
-      res.send({
+      res.set('Content-Type', 'application/json');
+      res.status(200).send({
         token: jwtToken,
         refresh_token: refresh,
         user: {
@@ -83,7 +78,7 @@ const SessionController = {
         const userId = req.params.id;
         const response = await UserRepository.findOne(userId);
 
-        if (user?._id !== response?._id) {
+        if ((user as UserModel)?._id !== response?._id) {
           return res.send(401).send({
             message: 'Invalid token!',
           });

@@ -1,19 +1,7 @@
-import User from '../models/user';
+import User, { UserModel } from '../models/user';
 import hash from '../utils/crypto';
 
-type UserModel = {
-    name: string
-    email: string
-    password: string
-    podcasts: unknown
-}
-
-type UserResponse = {
-    _id: string
-    name: string
-    email: string
-    podcasts: unknown
-}
+export type UserResponse = Omit<UserModel, 'password' | 'podcasts'>
 
 const fieldsToRetrieve = '_id name email';
 
@@ -29,10 +17,12 @@ const UserRepository = {
 
     newUser.save();
 
-    return newUser;
+    const userToResponse = await User.findOne({ _id: newUser._id }, fieldsToRetrieve).exec();
+
+    return userToResponse;
   },
   async findOne(id: string) {
-    return User.findOne({ _id: id }, fieldsToRetrieve).exec();
+    return User.findOne({ _id: id as unknown }, fieldsToRetrieve).exec();
   },
   async findAll(): Promise<Array<UserResponse>> {
     return User.find({}, fieldsToRetrieve);
@@ -52,7 +42,7 @@ const UserRepository = {
     return null;
   },
   async delete(id: string) {
-    await User.deleteOne({ _id: id });
+    await User.deleteOne({ _id: id as unknown });
   },
 };
 

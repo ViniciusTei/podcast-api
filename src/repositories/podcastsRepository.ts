@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import Podcasts from '../models/podcast';
 
 type PodcastModel = {
@@ -31,7 +32,7 @@ const PodcastsRepository = {
 
     return response;
   },
-  async deleteByPodcastId(podcastId: string) {
+  async deleteByPodcastId(podcastId: ObjectId) {
     await Podcasts.deleteOne({ _id: podcastId });
   },
 };
