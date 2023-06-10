@@ -24,12 +24,12 @@ const EpisodesController = {
   },
 
   async show(req: Request, res: Response) {
-    const { episodeId } = req.body;
+    const { episodeId } = req.query;
 
     try {
       const service = new EpisodesService(EpisodesRepository, PodcastsRepository, UserRepository);
 
-      const episode = await service.findEpisode(episodeId);
+      const episode = await service.findEpisode(episodeId as string);
 
       res.send(episode);
     } catch (error) {
