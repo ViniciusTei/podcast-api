@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import routes from './routes';
+import errorHandler from './middleware/errorHandler';
 
 const app = express();
 
@@ -28,4 +29,7 @@ if (process.env.MONGO_CONNECT_URL) {
 app.use((req, res) => {
   res.status(404).send('⚠️ Route not found!');
 });
+
+app.use(errorHandler);
+
 export default app;
