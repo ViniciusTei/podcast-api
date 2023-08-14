@@ -1,43 +1,37 @@
-import User, { UserModel } from '../models/user';
-import hash from '../utils/crypto';
-
-export type UserResponse = Omit<UserModel, 'password' | 'podcasts'>
-
-const fieldsToRetrieve = '_id name email';
+import User, { UserModel, UserAuthModel } from '../models/user';
 
 const UserRepository = {
   findByEmail(email: string) {
-    return User.findOne({ email }).exec();
+    return User.findOne({ email });
   },
-  async create(user: UserModel) {
-    const newUser = new User();
-    newUser.name = user.name;
-    newUser.email = user.email;
-    newUser.password = hash(user.password);
-
-    newUser.save();
-
-    const userToResponse = await User.findOne({ _id: newUser._id }, fieldsToRetrieve).exec();
-
+  async create(user: UserAuthModel) {
+    const userToResponse = await User.create(user);
     return userToResponse;
   },
   async findOne(id: string) {
-    return User.findOne({ _id: id as unknown }, fieldsToRetrieve).exec();
+    return User.findOne({ id: id as unknown });
   },
-  async findAll(): Promise<Array<UserResponse>> {
-    return User.find({}, fieldsToRetrieve);
-  },
-  async update({ _id, name, email }: UserResponse) {
-    const userToUpdate = await User.findById({ _id }, fieldsToRetrieve).exec();
+  async findAll(): Promise<Array<UserModel>> {
+    const { data, error } = await User.findAll();
 
-    if (userToUpdate) {
-      userToUpdate.name = name;
-      userToUpdate.email = email;
-
-      userToUpdate.save();
-
-      return userToUpdate;
+    if (error) {
+      throw new Error(error.message);
     }
+
+    return data;
+  },
+  async update({ id, name, email }: UserModel) {
+    const userToUpdate = await User.findById({ id });
+
+    // if (userToUpdate) {
+    //   userToUpdate.name = name;
+    //   userToUpdate.email = email;
+    //
+    //   userToUpdate.save();
+    //
+    //   return userToUpdate;
+    // }
+    console.log('update', userToUpdate);
 
     return null;
   },

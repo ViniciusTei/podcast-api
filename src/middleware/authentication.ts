@@ -26,7 +26,7 @@ export default function auth(
     }
 
     const userId = req.params.id;
-    if (userId !== (user as UserModel)?._id.toString()) {
+    if (userId !== (user as UserModel)?.id.toString()) {
       return res.status(401).send({
         message: 'Invalid token!',
       });

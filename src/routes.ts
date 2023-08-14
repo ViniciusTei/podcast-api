@@ -9,7 +9,6 @@ import auth from './middleware/authentication';
 const router = express.Router();
 
 router.post('/login', SessionController.login);
-router.post('/refresh-token/:id', auth, SessionController.refreshToken);
 
 router.get('/users', UserController.index);
 router.post('/users', UserController.create);

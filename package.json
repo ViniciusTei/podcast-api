@@ -25,6 +25,7 @@
     "@types/jsonwebtoken": "^8.5.5",
     "@types/morgan": "^1.9.4",
     "@types/node": "^16.10.3",
+    "@types/pg": "^8.10.2",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -44,6 +45,7 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.32.0",
     "cors": "^2.8.5",
     "date-fns": "^2.25.0",
     "dotenv": "^10.0.0",
@@ -53,6 +55,7 @@
     "mongoose": "^6.0.10",
     "morgan": "^1.10.0",
     "morgan-body": "^2.6.9",
+    "pg": "^8.11.2",
     "rss-parser": "^3.12.0",
     "typescript": "^4.4.3"
   }
