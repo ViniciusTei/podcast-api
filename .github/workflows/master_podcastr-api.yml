@@ -49,7 +49,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
-    steps:
       - name: Deploy do VPS
         uses: burnett01/rsync-deployments@7.0.2
         with:
