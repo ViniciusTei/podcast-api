@@ -50,8 +50,7 @@ jobs:
         run: unzip release.zip
       
     steps:
-      - uses: actions/checkout@v3
-      - name: rsync deployments
+      - name: Deploy do VPS
         uses: burnett01/rsync-deployments@7.0.2
         with:
           switches: -avzr --delete
