@@ -54,8 +54,8 @@ jobs:
         with:
           switches: -avzr --delete
           path: src/
-          remote_path: /var/www/podcatr/api/
-          remote_host: viniciustei.com.br
-          remote_user: vinicius
+          remote_path: /var/www/podcastr/api/
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
           
