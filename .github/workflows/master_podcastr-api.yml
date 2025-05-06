@@ -1,8 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - podcastr-api
-
+name: Build and deploy 
 on:
   push:
     branches:
@@ -53,18 +49,15 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
-      - name: Login to Azure
-        uses: azure/login@v1
+    steps:
+      - uses: actions/checkout@v3
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@7.0.2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_32DBB072EF994D9AA0E9605E740F5F29 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CDF6A081A8EB45E38FCEC6A96666D533 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_00715E03DECC4F569EB3BE857EDBFA1C }}
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'podcastr-api'
-          slot-name: 'Production'
-          package: .
+          switches: -avzr --delete
+          path: src/
+          remote_path: /var/www/podcatr/api/
+          remote_host: viniciustei.com.br
+          remote_user: vinicius
+          remote_key: ${{ secrets.DEPLOY_KEY }}
           
