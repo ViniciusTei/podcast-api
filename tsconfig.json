@@ -9,7 +9,8 @@
       "resolveJsonModule": true,
     },
     "include": [
-        "./**/*"
+        "./**/*",
+        "./node_modules/**/*"
     ],
     "exclude": ["./build", "./tests"]
 }
