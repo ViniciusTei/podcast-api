@@ -7,7 +7,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "dev": "nodemon index.ts",
-    "build": "tsc",
+    "build": "tsc --skipLibCheck",
     "start:prod": "node build/index.js"
   },
   "keywords": [
@@ -50,7 +50,7 @@
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.10",
+    "mongoose": "8.14.1",
     "morgan": "^1.10.0",
     "morgan-body": "^2.6.9",
     "rss-parser": "^3.12.0",

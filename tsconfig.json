@@ -7,10 +7,10 @@
       "esModuleInterop": true,
       "strict": false,
       "resolveJsonModule": true,
+      "skipLibCheck": true
     },
     "include": [
-        "./**/*",
-        "./node_modules/**/*"
+        "./**/*"
     ],
     "exclude": ["./build", "./tests"]
 }
