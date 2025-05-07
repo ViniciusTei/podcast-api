@@ -9,7 +9,7 @@ const UserController = {
   async show(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const user = await UserRepository.findOne(id);
+      const user = await UserRepository.findOne(Number(id));
       res.send(user);
     } catch (error) {
       res.status(500).send(error);
@@ -48,7 +48,7 @@ const UserController = {
     const { id } = req.params;
 
     try {
-      await UserRepository.delete(id);
+      await UserRepository.delete(Number(id));
       res.send({
         message: 'Users successfuly deleted!',
       });
