@@ -91,13 +91,13 @@ export default class EpisodesService {
   }
 
   async findAllFromPodcast(page: string, pageSize: string, userId: string) {
-    const user = await this.userRepository.findOne(userId);
+    const user = await this.userRepository.findOne(Number(userId));
 
     if (!user) {
       throw new Error('User not found');
     }
 
-    const episodes = await this.getAllEpisodes(user._id.toString());
+    const episodes = await this.getAllEpisodes(user.id.toString());
 
     const numberPage = typeof page !== 'number' ? parseInt(page as string, 10) : page;
     const numberPageSize = typeof pageSize !== 'number' ? parseInt(pageSize as string, 10) : pageSize;

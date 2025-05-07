@@ -15,7 +15,7 @@ const SessionController = {
     const { email, password }: ISession = <ISession> req.body;
     const hashedPassword = hash(password);
 
-    const user: UserModel | null = await UserRepository.findByEmail(email);
+    const user = await UserRepository.findByEmail(email);
 
     if (!user) {
       res.status(400).send({ message: 'User or password incorrect!' });
@@ -28,12 +28,12 @@ const SessionController = {
     }
 
     if (process.env.SECRET) {
-      const jwtToken = jwt.sign({ _id: user._id, email: user.email, name: user.name },
+      const jwtToken = jwt.sign({ _id: user.id, email: user.email, name: user.name },
         process.env.SECRET, {
           expiresIn: 60 * 60 * 24, // 1 dia
         });
 
-      const refresh = jwt.sign({ _id: user._id }, process.env.SECRET, {
+      const refresh = jwt.sign({ _id: user.id }, process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365, // 1 ano
       });
 
@@ -42,7 +42,7 @@ const SessionController = {
         token: jwtToken,
         refresh_token: refresh,
         user: {
-          id: user._id,
+          id: user.id,
           name: user.name,
           email: user.email,
         },
@@ -75,10 +75,10 @@ const SessionController = {
           });
         }
 
-        const userId = req.params.id;
+        const userId = Number(req.params.id);
         const response = await UserRepository.findOne(userId);
 
-        if ((user as UserModel)?._id !== response?._id) {
+        if ((user as UserModel)?.id !== response?.id) {
           return res.send(401).send({
             message: 'Invalid token!',
           });
@@ -86,7 +86,7 @@ const SessionController = {
 
         if (response) {
           const jwtToken = jwt.sign({
-            _id: response?._id,
+            id: response?.id,
             email: response?.email,
             name: response?.name,
           },
@@ -94,7 +94,7 @@ const SessionController = {
             expiresIn: 60 * 60 * 24, // 1 dia
           });
 
-          const refresh = jwt.sign({ _id: response?._id }, process.env.SECRET ?? '', {
+          const refresh = jwt.sign({ _id: response?.id }, process.env.SECRET ?? '', {
             expiresIn: 60 * 60 * 24 * 365, // 1 ano
           });
 

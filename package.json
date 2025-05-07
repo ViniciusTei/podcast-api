@@ -25,6 +25,7 @@
     "@types/jsonwebtoken": "^8.5.5",
     "@types/morgan": "^1.9.4",
     "@types/node": "^16.10.3",
+    "@types/pg": "^8.15.0",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -53,6 +54,7 @@
     "mongoose": "8.14.1",
     "morgan": "^1.10.0",
     "morgan-body": "^2.6.9",
+    "pg": "^8.15.6",
     "rss-parser": "^3.12.0",
     "typescript": "^4.4.3"
   }
