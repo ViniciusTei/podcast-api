@@ -55,5 +55,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
-          script: whoami
+          script: |
+            cd /var/www/podcastr/api
+            ./deploy.sh
             
